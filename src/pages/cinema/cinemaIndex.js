@@ -20,6 +20,7 @@ const CinemaTabNav = TabNavigator({
 }, {
     tabBarPosition: 'top',
     animationEnabled: false,
+    swipeEnabled: true,
     tabBarOptions: {
         activeTintColor: Theme.colorPrimary,
         inactiveTintColor: 'gray', // 文字和图片未选中颜色
