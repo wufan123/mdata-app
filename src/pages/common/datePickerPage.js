@@ -50,7 +50,7 @@ export  default  class DatePickerPage extends React.Component {
             let mark = {};
             mark.firstChoiceDay = day.dateString;
             mark[day.dateString] = {startingDay: true, endingDay: true, ...markStyle};
-            this.setState({markedDates: mark, startingDate: day.dateString,endingDate:''});
+            this.setState({markedDates: mark, startingDate: day.dateString, endingDate: ''});
         }
         else {
             let mark = {};
@@ -79,8 +79,9 @@ export  default  class DatePickerPage extends React.Component {
     dateDif(mark, startTime, endTime) {
         while ((endTime.getTime() - startTime.getTime()) >= 0) {
             let year = startTime.getFullYear();
-            let month = (startTime.getMonth().toString().length === 1 ? "0" + startTime.getMonth().toString() : startTime.getMonth()) + 1;
+            let month = (startTime.getMonth()<9? "0" + (startTime.getMonth()+1).toString() : startTime.getMonth()+1);
             let day = startTime.getDate().toString().length === 1 ? "0" + startTime.getDate() : startTime.getDate();
+            console.log(year + "-" + month + "-" + day)
             mark[year + "-" + month + "-" + day] = markStyle;
             startTime.setDate(startTime.getDate() + 1);
         }
@@ -90,7 +91,7 @@ export  default  class DatePickerPage extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 1,backgroundColor:'blue'}}>
+            <View style={{flex: 1, backgroundColor: 'blue'}}>
                 <CalendarList
                     // Callback which gets executed when visible months change in scroll view. Default = undefined
                     onVisibleMonthsChange={(months) => {
@@ -110,6 +111,7 @@ export  default  class DatePickerPage extends React.Component {
                     markedDates={
                         this.state.markedDates}
                     markingType={'period'}
+                    maxDate={'2017-11-30'}
                     theme={{
                         // backgroundColor: '#4445df',
                         // calendarBackground: 'blue',
@@ -131,7 +133,7 @@ export  default  class DatePickerPage extends React.Component {
                         // textDayHeaderFontSize: 16
                     }}
                 />
-                {this.state.mode==="period"?(<View style={styles.pickerBottom}>
+                {this.state.mode === "period" ? (<View style={styles.pickerBottom}>
                     <View>
                         <Text>
                             开始时间：{this.state.startingDate}
@@ -146,14 +148,14 @@ export  default  class DatePickerPage extends React.Component {
                     }}>
                         确定
                     </Button>
-                </View>):null}
+                </View>) : null}
 
             </View>
         );
     }
 
     _onConfirmClick() {
-        console.log("-----","click")
+        console.log("-----", "click")
         this.props.navigation.goBack();
     }
 }
