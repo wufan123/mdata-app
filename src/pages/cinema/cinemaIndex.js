@@ -47,6 +47,15 @@ const CinemaTabNav = TabNavigator({
 });
 
 export  default  class Cinema extends React.Component {
+    static navigationOptions = {
+        tabBarLabel: '影院',
+        tabBarIcon: ({tintColor}) => (
+            <Image
+                source={require('../../assets/cinema.png')}
+                style={[styles.icon, {tintColor: tintColor}]}
+            />
+        ),
+    };
 
     render() {
         return (

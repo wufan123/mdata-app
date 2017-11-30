@@ -6,6 +6,42 @@ import Me from './me/meIndex'
 import {Text, View, StyleSheet, Image} from "react-native";
 import SimpleTab from './component/simpleTab'
 
+
+
+let TabNav = TabNavigator({
+    CinemaTab: {
+        screen: Cinema
+    },
+    FilmTab: {
+        screen: Film
+    },
+    MeTab: {
+        screen: Me
+    }
+
+}, {
+    tabBarPosition: 'bottom',
+    animationEnabled: false,
+    swipeEnabled: false,
+    tabBarOptions: {
+        activeTintColor: Theme.colorPrimary,
+        inactiveTintColor: 'gray', // 文字和图片未选中颜色
+        showIcon: true,
+        style: {
+            backgroundColor: '#fff',
+        },
+        labelStyle: {
+            fontSize: 10, // 文字大小
+            marginBottom: 3
+        },
+        iconStyle: {
+            width: 26,
+            height: 26,
+        },
+    },
+    backBehavior: 'none',//去除物理返回键事件
+});
+
 export  default  class Main extends React.Component {
 
     constructor(props){
@@ -17,14 +53,9 @@ export  default  class Main extends React.Component {
         header: null,
     }
 
-
     render() {
         return (
-            <SimpleTab>
-                <Cinema tabLabel={'影院'} tabIcon={require('../assets/cinema.png')} />
-                <Film tabLabel={'影片'} tabIcon={require('../assets/film.png')}/>
-                <Me tabLabel={'我的'} tabIcon={require('../assets/me.png')}/>
-            </SimpleTab>
+            <TabNav />
         )
     }
 }

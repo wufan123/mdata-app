@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Image, StyleSheet} from "react-native";
+import {Button, Image, StyleSheet, View} from "react-native";
 export  default  class Me extends React.Component {
     static navigationOptions = {
         tabBarLabel: '我的',
@@ -13,10 +13,12 @@ export  default  class Me extends React.Component {
 
     render() {
         return (
-            <Button
-                onPress={() => this.props.navigation.goBack()}
-                title="Go back home"
-            />
+            <View style={{flex: 1}}>
+                <Button
+                    onPress={() => this.props.navigation.goBack()}
+                    title="Go back home"
+                />
+            </View>
         );
     }
 }
