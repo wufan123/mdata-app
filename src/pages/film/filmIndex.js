@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Image, StyleSheet} from "react-native";
+import {Button, Image, StyleSheet, View} from "react-native";
 
 export default class Film extends React.Component {
     static navigationOptions = {
@@ -14,10 +14,12 @@ export default class Film extends React.Component {
 
     render() {
         return (
-            <Button
-                onPress={() => this.props.navigation.goBack()}
-                title="Go back home"
-            />
+            <View style={{flex: 1}}>
+                <Button
+                    onPress={() => this.props.navigation.goBack()}
+                    title="Go back home"
+                />
+            </View>
         );
     }
 }
