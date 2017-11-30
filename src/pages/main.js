@@ -30,9 +30,8 @@ let TabNav = TabNavigator({
             backgroundColor: '#fff',
         },
         labelStyle: {
-            fontSize: 12, // 文字大小
-            paddingTop: 3,
-            marginBottom: -3
+            fontSize: 10, // 文字大小
+            marginBottom: 3
         },
         iconStyle: {
             width: 26,
