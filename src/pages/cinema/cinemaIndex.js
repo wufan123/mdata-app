@@ -20,6 +20,7 @@ let TabNav = TabNavigator({
 }, {
     tabBarPosition: 'top',
     animationEnabled: false,
+    swipeEnabled: true,
     tabBarOptions: {
         activeTintColor: Theme.colorPrimary,
         inactiveTintColor: 'gray', // 文字和图片未选中颜色
@@ -39,7 +40,6 @@ let TabNav = TabNavigator({
             fontSize: 16, // 文字大小
         },
         tabStyle: {
-            height: 45,
             width: 65
         },
     },
