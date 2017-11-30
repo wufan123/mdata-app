@@ -11,7 +11,6 @@ export  default  class simpleTab extends React.Component {
     _onChangeSelect(index) {
         console.log('---------', index)
         this.setState({selectIndex: index})
-
     }
 
     render() {

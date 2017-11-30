@@ -1,12 +1,12 @@
 import React from 'react'
-import {Image, StyleSheet, Text, View, Dimensions} from "react-native";
+import {Image, StyleSheet,View,Dimensions} from "react-native";
+import TabNavigator from "react-navigation/lib-rn/navigators/TabNavigator";
 import NationWide from "./nationwide";
-import Forecast from "./forecast";
 import Me from "./me";
-import {TabNavigator} from "react-navigation";
-import  Theme from '../../style'
+import Forecast from "./forecast";
+import Theme from "../../style/index";
 
-let TabNav = TabNavigator({
+const CinemaTabNav = TabNavigator({
     NationWide: {
         screen: NationWide,
     },
@@ -39,34 +39,24 @@ let TabNav = TabNavigator({
             fontSize: 16, // 文字大小
         },
         tabStyle: {
-            height: 45,
             width: 65
         },
     },
     backBehavior: 'none',//去除物理返回键事件
 });
+
 export  default  class Cinema extends React.Component {
-    static navigationOptions = {
-        tabBarLabel: '影院',
-        // Note: By default the icon is only shown on iOS. Search the showIcon option below.
-        tabBarIcon: ({tintColor}) => (
-            <Image
-                source={require('../../assets/cinema.png')}
-                style={[styles.icon, {tintColor: tintColor}]}
-            />
-        ),
-    };
 
     render() {
         return (
             <View style={{flex: 1}}>
-                <TabNav/>
                 <View style={styles.topRight}>
                     <Image
                         source={require('../../assets/search.png')}
                         style={styles.icon}
                     />
                 </View>
+                <CinemaTabNav/>
             </View>
         )
     }

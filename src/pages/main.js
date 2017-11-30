@@ -8,6 +8,10 @@ import SimpleTab from './component/simpleTab'
 
 export  default  class Main extends React.Component {
 
+    constructor(props){
+        super(props);
+        global.navigation = this.props.navigation
+    }
     static navigationOptions = {
         title: 'Home',
         header: null,
@@ -17,7 +21,7 @@ export  default  class Main extends React.Component {
     render() {
         return (
             <SimpleTab>
-                <Cinema tabLabel={'影院'} tabIcon={require('../assets/cinema.png')}/>
+                <Cinema tabLabel={'影院'} tabIcon={require('../assets/cinema.png')} />
                 <Film tabLabel={'影片'} tabIcon={require('../assets/film.png')}/>
                 <Me tabLabel={'我的'} tabIcon={require('../assets/me.png')}/>
             </SimpleTab>

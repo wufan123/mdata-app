@@ -12,7 +12,8 @@ export  default  class NationWide extends React.Component {
         super(props)
     }
     _onClickCard(arg){
-        this.props.navigation.navigate('NationwideDetail');
+        console.log("--------",this.props.navigation)
+        global.navigation.navigate('NationwideDetail');
     }
     render() {
         return (
