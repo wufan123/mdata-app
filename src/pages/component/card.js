@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
 Card.propTypes={
     ...View.propTypes,
     onPress: PropTypes.func,
-}
+};

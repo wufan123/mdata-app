@@ -15,7 +15,7 @@ export  default  class Me extends React.Component {
 
     _openDataPicker() {
         console.log('-------','datePicker')
-        global.navigation.navigate('DatePickerPage')
+        global.navigation.navigate('DatePickerPage',{pickerMode:'period'})
     }
 
     render() {

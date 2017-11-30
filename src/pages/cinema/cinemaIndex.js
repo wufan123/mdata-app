@@ -71,6 +71,6 @@ const styles = StyleSheet.create({
     topRight: {
         position: 'absolute',
         right: 25,
-        top: 15
+        top: 26
     }
 });
