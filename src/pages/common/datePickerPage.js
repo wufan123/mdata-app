@@ -81,7 +81,6 @@ export  default  class DatePickerPage extends React.Component {
             let year = startTime.getFullYear();
             let month = (startTime.getMonth()<9? "0" + (startTime.getMonth()+1).toString() : startTime.getMonth()+1);
             let day = startTime.getDate().toString().length === 1 ? "0" + startTime.getDate() : startTime.getDate();
-            console.log(year + "-" + month + "-" + day)
             mark[year + "-" + month + "-" + day] = markStyle;
             startTime.setDate(startTime.getDate() + 1);
         }
@@ -111,7 +110,7 @@ export  default  class DatePickerPage extends React.Component {
                     markedDates={
                         this.state.markedDates}
                     markingType={'period'}
-                    maxDate={'2017-11-30'}
+                    maxDate={new  Date().format("yyyy-MM-dd")}
                     theme={{
                         // backgroundColor: '#4445df',
                         // calendarBackground: 'blue',

@@ -3,6 +3,8 @@ import Main from "./pages/main";
 import NationwideDetail from "./pages/cinema/nationwideDetail";
 import Cinema from "./pages/cinema/cinemaIndex";
 import DatePickerPage from "./pages/common/datePickerPage";
+import './utils'
+import ForecastDetail from "./pages/cinema/forecastDetail";
 
 const RootNavigator = StackNavigator({
     Main:{
@@ -20,7 +22,9 @@ const RootNavigator = StackNavigator({
     },
     DatePickerPage:{
       screen:DatePickerPage
+    },
+    ForecastDetail:{
+        screen:ForecastDetail
     }
-
 });
 export default RootNavigator;

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, StyleSheet,View,Dimensions} from "react-native";
+import {Image, StyleSheet, View, Dimensions} from "react-native";
 import TabNavigator from "react-navigation/lib-rn/navigators/TabNavigator";
 import NationWide from "./nationwide";
 import Me from "./me";
@@ -57,6 +57,10 @@ export  default  class Cinema extends React.Component {
         ),
     };
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -66,11 +70,12 @@ export  default  class Cinema extends React.Component {
                         style={styles.icon}
                     />
                 </View>
-                <CinemaTabNav/>
+                <CinemaTabNav navigation={this.props.navigation}/>
             </View>
         )
     }
 }
+Cinema.router = CinemaTabNav.router;
 
 const styles = StyleSheet.create({
     icon: {
