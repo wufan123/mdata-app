@@ -3360,6 +3360,10 @@ react-native-tab-view@^0.0.70:
   dependencies:
     prop-types "^15.5.10"
 
+"react-native-table-component@git+https://github.com/react-native-common/react-native-table-component.git":
+  version "1.1.2"
+  resolved "git+https://github.com/react-native-common/react-native-table-component.git#b0442cd313217c482faacf2098bc117387863bd5"
+
 react-native@0.50.3:
   version "0.50.3"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.50.3.tgz#91282bd5356cc7d794969cdc443cc764389b9af4"
