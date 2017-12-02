@@ -11,7 +11,6 @@ class TableView extends Component {
         borderStyle: PropTypes.object,
         head: PropTypes.string,
         titles: PropTypes.array,
-        headStyle: PropTypes.object,
         cellWidth: PropTypes.number,
         cellHeight: PropTypes.number,
         tableHead: PropTypes.array,
@@ -20,46 +19,56 @@ class TableView extends Component {
 
     constructor(props) {
         super(props)
-        console.log('constructor......')
     }
 
     render() {
-        console.log('...hello')
         let head = this.props.head ? this.props.head : 'head'
-        let tableTitle = this.props.titles || Array(900).fill().map((e, i) => 'title' + i)
+        let tableTitle = this.props.titles || Array(100).fill().map((e, i) => 'title' + i)
         let height = this.props.cellHeight || 28
         let width = this.props.cellWidth || 60
-        let tableHead = this.props.tableHead || Array(7).fill().map((e, i) => 'head' + i)
+        let tableHead = this.props.tableHead || Array(20).fill().map((e, i) => 'head' + i)
         let tableData = this.props.tableData || Array(tableTitle.length).fill().map((e, i) => Array(tableHead.length).fill().map((e, i) => i))
         let widthArr = Array(tableHead.length).fill().map((e, i) => width)
 
         return (
             <View style={this.props.style}>
-                <ScrollView>
-                    <Table style={styles.table} borderStyle={{ borderColor: 'transparent', }}>
+                <ScrollView style={{flex:1}}>
+                    <View style={styles.table} >
                         {/* Left Wrapper */}
-                        <TableWrapper style={{ minWidth: 100 }}>
-                            <Cell data={head} height={height} style={[styles.head, { backgroundColor: defaultStyle.grayBackground }]} textStyle={[styles.headText, { textAlign: 'left' }]} />
-                            {
-                                tableTitle.map((title, i) => (
-                                    <Cell key={i} data={title} height={height} style={i % 2 && { backgroundColor: defaultStyle.grayBackground }} textStyle={[styles.titleText, { textAlign: 'left' }]} />
-                                ))
-                            }
-                        </TableWrapper>
+                        <View style={{ minWidth: 100 }} >
+                            <Cell data={head} height={height}  style={[styles.head, { backgroundColor: defaultStyle.grayBackground }]} textStyle={[styles.headText, { textAlign: 'left' }]} />
+                            <FlatList
+                                style={{flex:1}}
+                                bounces={false}
+                                data={tableTitle}
+                                keyExtractor={(item, index)=>index}
+                                renderItem={ ({item, index})=> {
+                                    return(
+                                        <Cell key={index} data={item} height={height} style={index % 2 && { backgroundColor: defaultStyle.grayBackground }} textStyle={[styles.titleText, { textAlign: 'left' }]} />
+                                    )
+                                }}
+                            />
+                        </View>
 
                         {/* Right scrollview Wrapper */}
                         <ScrollView style={{}} contentContainerStyle={{}} horizontal={true} bounces={false}>
                             {/* If parent element is not table element, you should add the type of borderstyle. */}
-                            <TableWrapper style={{}} borderStyle={{ borderColor: 'transparent' }}>
+                            <View style={{}}>
                                 <Row data={tableHead} height={height} style={styles.head} textStyle={styles.headText} widthArr={widthArr} />
-                                {
-                                    tableData.map((data, i) => (
-                                        <Row key={i} data={data} height={height} style={[styles.list, i % 2 && { backgroundColor: defaultStyle.grayBackground }]} widthArr={widthArr} textStyle={styles.listText} />
-                                    ))
-                                }
-                            </TableWrapper>
+                                <FlatList
+                                    style={{flex:1}}
+                                    bounces={false}
+                                    data={tableData}
+                                    keyExtractor={(item, index)=>index}
+                                    renderItem={({item, index})=>{
+                                        return(
+                                            <Row key={index} data={item} height={height} style={[styles.list, index % 2 && { backgroundColor: defaultStyle.grayBackground }]} widthArr={widthArr} textStyle={styles.listText} />
+                                        )
+                                    }}
+                                />
+                            </View>
                         </ScrollView>
-                    </Table>
+                    </View>
                 </ScrollView>
             </View>
         )
@@ -68,7 +77,8 @@ class TableView extends Component {
 
 const styles = StyleSheet.create({
     table: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flex: 1,
     },
     head: {
         backgroundColor: defaultStyle.grayBackground

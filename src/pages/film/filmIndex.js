@@ -20,13 +20,23 @@ export default class Film extends React.Component {
     }
 
     render() {
+        let head = 'date'
+        let tableTitle = Array(50).fill().map((e, i) => 'date' + i)
+        let height = 44
+        let width = 60
+        let tableHead = Array(16).fill().map((e, i) => 'head' + i)
+        let tableData = Array(tableTitle.length).fill().map((e, i) => Array(tableHead.length).fill().map((e, i) => i))
         return (
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ paddingHorizontal: 0, flex: 1 }}>
-                    <TableView
-                        style={{marginHorizontal: 20}}
-                    />
-                </View>
+                <TableView
+                    style={{marginHorizontal: 20, flex: 1}}
+                    head={head}
+                    titles={tableTitle}
+                    cellWidth={width}
+                    cellHeight={height}
+                    tableHead={tableHead}
+                    tableData={tableData}
+                />
             </SafeAreaView>
         );
     }
