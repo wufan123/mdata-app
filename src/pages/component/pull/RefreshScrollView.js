@@ -317,6 +317,14 @@ export default class RefreshScrollView extends Pullable {
         this.scrollContentHeight = height;
     }
 
+    scrollTo(y, x, animated=true) {
+        this.scroll.scrollTo({
+            x: x,
+            y: y,
+            animated: animated
+        })
+    }
+
     /**
      * 加载列表数据
      * @returns {XML}
@@ -326,6 +334,7 @@ export default class RefreshScrollView extends Pullable {
         return (
             <ScrollView ref={(c) => { this.scroll = c; }}
                 onScroll={this.iosOnScroll}
+                onScrollEndDrag={this.props.onScrollEndDrag}
                 onContentSizeChange={this.onContentSizeChange}
                 scrollEnabled={true}
                 onResponderRelease={this.handleRelease}

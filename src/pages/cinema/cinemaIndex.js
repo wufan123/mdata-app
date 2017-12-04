@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, StyleSheet, View, Dimensions} from "react-native";
+import {Image, StyleSheet, View, Dimensions, SafeAreaView, Platform} from "react-native";
 import TabNavigator from "react-navigation/lib-rn/navigators/TabNavigator";
 import NationWide from "./nationwide";
 import Me from "./me";
@@ -34,7 +34,8 @@ const CinemaTabNav = TabNavigator({
             backgroundColor: 'transparent', // TabBar 背景色
             justifyContent: 'center',
             // height: 50,
-            marginHorizontal: (Dimensions.get('window').width - (3 * 65)) / 2
+            marginHorizontal: (Dimensions.get('window').width - (3 * 65)) / 2,
+            borderTopWidth: 0,
         },
         labelStyle: {
             fontSize: 16, // 文字大小
@@ -43,6 +44,9 @@ const CinemaTabNav = TabNavigator({
             width: 65
         },
     },
+    contentOptions: {
+        itemsContainerForceInset: { top: 'never', horizontal: 'never' },
+      },
     backBehavior: 'none',//去除物理返回键事件
 });
 
