@@ -44,9 +44,6 @@ const CinemaTabNav = TabNavigator({
             width: 65
         },
     },
-    contentOptions: {
-        itemsContainerForceInset: { top: 'never', horizontal: 'never' },
-      },
     backBehavior: 'none',//去除物理返回键事件
 });
 
