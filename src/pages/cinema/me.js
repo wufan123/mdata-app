@@ -3,6 +3,7 @@ import {Button, Image, StyleSheet, Text, TouchableOpacity, View} from "react-nat
 import RefreshScrollView from "../component/pull/RefreshScrollView";
 import Card from "../component/card";
 import Theme from "../../style/index";
+import TextButton from "../component/textButton";
 
 export  default  class Me extends React.Component {
     static navigationOptions = {
@@ -10,7 +11,7 @@ export  default  class Me extends React.Component {
     };
 
     _onClickCard() {
-
+        global.navigation.navigate('CinemaDetail')
     }
 
     _openDataPicker() {
@@ -30,16 +31,13 @@ export  default  class Me extends React.Component {
                                     影院总计
                                 </Text>
                             </View>
-
                             <View style={styles.cardTop}>
                                 <Text >
                                     昨日票房
                                 </Text>
-                                <TouchableOpacity onPress={this._openDataPicker} activeOpacity={0.75}>
-                                    <Text style={styles.linkTxt}>
-                                        2017年11月7日▾
-                                    </Text>
-                                </TouchableOpacity>
+                                <TextButton onPress={this._openDataPicker}>
+                                    2017年11月7日▾
+                                </TextButton>
                             </View>
                             <View style={styles.cardCenter}>
                                 <Text style={[styles.largeTxt, Theme.font24]}>
@@ -61,9 +59,6 @@ export  default  class Me extends React.Component {
     }
 }
 const styles = StyleSheet.create({
-    linkTxt: {
-        color: Theme.colorPrimary
-    },
     cardBottom: {
         marginTop: 20,
         marginBottom: 20,

@@ -5,6 +5,7 @@ import Cinema from "./pages/cinema/cinemaIndex";
 import DatePickerPage from "./pages/common/datePickerPage";
 import './utils'
 import ForecastDetail from "./pages/cinema/forecastDetail";
+import CinemaDetail from "./pages/cinema/cinemaDetail";
 
 const RootNavigator = StackNavigator({
     Main:{
@@ -25,6 +26,9 @@ const RootNavigator = StackNavigator({
     },
     ForecastDetail:{
         screen:ForecastDetail
+    },
+    CinemaDetail:{
+        screen:CinemaDetail
     }
 });
 export default RootNavigator;

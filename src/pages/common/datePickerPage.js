@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
 import Theme from "../../style/index";
@@ -22,6 +22,7 @@ export  default  class DatePickerPage extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log('---------');
         let navParams = this.props.navigation.state.params;
         this.state = {
             mode: navParams.pickerMode ? navParams.pickerMode : 'single',
@@ -60,26 +61,27 @@ export  default  class DatePickerPage extends React.Component {
             if (date2.getTime() < date1.getTime()) {
                 startingDate = day.dateString;
                 endingDate = markedDates.firstChoiceDay;
-                mark = this.dateDif(mark, date2, date1);
+                mark = this.getDifDates(mark, date2, date1);
                 mark[day.dateString] = {startingDay: true, ...markStyle};
                 mark[markedDates.firstChoiceDay] = {endingDay: true, ...markStyle};
             }
             else if (date2.getTime() > date1.getTime()) {
                 startingDate = markedDates.firstChoiceDay;
                 endingDate = day.dateString;
-                mark = this.dateDif(mark, date1, date2);
+                mark = this.getDifDates(mark, date1, date2);
                 mark[markedDates.firstChoiceDay] = {startingDay: true, ...markStyle};
                 mark[day.dateString] = {endingDay: true, ...markStyle};
             }
             this.setState({markedDates: mark, startingDate: startingDate, endingDate: endingDate});
         }
+        console.log(this.state.markedDates)
 
     }
 
-    dateDif(mark, startTime, endTime) {
+    getDifDates(mark, startTime, endTime) {
         while ((endTime.getTime() - startTime.getTime()) >= 0) {
             let year = startTime.getFullYear();
-            let month = (startTime.getMonth()<9? "0" + (startTime.getMonth()+1).toString() : startTime.getMonth()+1);
+            let month = (startTime.getMonth() < 9 ? "0" + (startTime.getMonth() + 1).toString() : startTime.getMonth() + 1);
             let day = startTime.getDate().toString().length === 1 ? "0" + startTime.getDate() : startTime.getDate();
             mark[year + "-" + month + "-" + day] = markStyle;
             startTime.setDate(startTime.getDate() + 1);
@@ -107,10 +109,13 @@ export  default  class DatePickerPage extends React.Component {
                     onDayPress={(day) => {
                         this._onDayPress(day)
                     }}
-                    markedDates={
-                        this.state.markedDates}
+                    dayComponent={(dayDetail) => {
+                        return this.getCustomDayComponent(dayDetail);
+                    }}
+                    /*markedDates={
+                     this.state.markedDates}*/
                     markingType={'period'}
-                    maxDate={new  Date().format("yyyy-MM-dd")}
+                    maxDate={new Date().format("yyyy-MM-dd")}
                     theme={{
                         // backgroundColor: '#4445df',
                         // calendarBackground: 'blue',
@@ -154,12 +159,102 @@ export  default  class DatePickerPage extends React.Component {
     }
 
     _onConfirmClick() {
-        console.log("-----", "click")
         this.props.navigation.goBack();
+    }
+
+    getDayTxtColor(state) {
+        switch(state)
+        {
+            case 'disabled':
+                return {
+                    color: Theme.fontColorDisable
+                };
+            case 'start':
+            case 'end':
+            case 'start-end':
+                return{
+                    color:'white'
+                };
+            /*case 'today':
+                return{
+                    color:Theme.colorPrimary
+                };*/
+            default:
+                return {
+                    color: Theme.fontColorBlack
+                };
+        }
+
+    }
+
+    getCustomDayComponent({state, date}) {
+
+        return (
+            <TouchableWithoutFeedback onPress={() => {
+                if (!(state === 'disabled')) {
+                    this._onCustomDayPress(date.day)
+                }
+            }}>
+                {
+                    <View style={styles.dayBlock}><Text style={this.getDayTxtColor(state)}>{date.day}</Text>
+                        <Text
+                            style={[Theme.font10, this.getDayTxtColor(state)]}>{this.getDayExtraInfo(date)}</Text>
+                    </View>
+                }
+            </TouchableWithoutFeedback>
+        );
+    }
+    getMarkedStatus(date){
+        let mDates = this.state.markedDates
+        for(let prop in mDates){
+            if(date === prop){
+                return mDates.prop.markedStatus
+            }
+        }
+    }
+    _onCustomDayPress(day) {
+
+        let markedDates = this.state.markedDates;
+        if (!markedDates.firstChoiceDay) {
+            let mark = {};
+            mark.firstChoiceDay = day.dateString;
+            mark[day.dateString] = {markedStatus:'start-end'};
+            this.setState({markedDates: mark, startingDate: day.dateString, endingDate: ''});
+        }
+        else {
+            let mark = {};
+            let date1 = new Date(markedDates.firstChoiceDay);
+            let date2 = new Date(day.dateString);
+            let startingDate, endingDate;
+            if (date2.getTime() < date1.getTime()) {
+                startingDate = day.dateString;
+                endingDate = markedDates.firstChoiceDay;
+                mark = this.getDifDates(mark, date2, date1);
+                mark[day.dateString] = {markedStatus:'start'};
+                mark[markedDates.firstChoiceDay] = {markedStatus:'end'};
+            }
+            else if (date2.getTime() > date1.getTime()) {
+                startingDate = markedDates.firstChoiceDay;
+                endingDate = day.dateString;
+                mark = this.getDifDates(mark, date1, date2);
+                mark[markedDates.firstChoiceDay] = {markedStatus:'start'};
+                mark[day.dateString] = {markedStatus:'end'};
+            }
+            this.setState({markedDates: mark, startingDate: startingDate, endingDate: endingDate});
+        }
+
+    }
+
+    getDayExtraInfo() {
+        return '情人节'
     }
 }
 
 const styles = StyleSheet.create({
+    dayBlock: {
+        flex: 1,
+        alignItems: 'center',
+    },
     pickerBottom: {
         height: 65,
         backgroundColor: '#fff',

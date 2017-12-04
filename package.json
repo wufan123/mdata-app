@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "native-echarts": "git+https://github.com/react-native-common/react-native-echarts.git#develop",
     "react": "^16.1.1",
     "react-native": "0.50.3",
     "react-native-calendars": "^1.14.2",
