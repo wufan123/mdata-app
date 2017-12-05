@@ -14,6 +14,9 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 let markStyle = {selected: true, color: Theme.colorPrimary, textColor: 'white'};
+
+
+
 export  default  class DatePickerPage extends React.Component {
 
     static navigationOptions = {
@@ -26,14 +29,14 @@ export  default  class DatePickerPage extends React.Component {
         let navParams = this.props.navigation.state.params;
         this.state = {
             mode: navParams.pickerMode ? navParams.pickerMode : 'single',
-            markedDates: {firstChoiceDay: '', secondChoiceDay: ''},
+            markedDates: {firstChoiceDay: '', secondChoiceDay: '','2017-12-04':'start-end'},
             startingDate: '',
             endingDate: ''
         };
 
     }
 
-    _onDayPress(day) {
+   /* _onDayPress(day) {
         switch (this.state.mode) {
             case 'period':
                 this.selectPeriod(day);
@@ -76,14 +79,15 @@ export  default  class DatePickerPage extends React.Component {
         }
         console.log(this.state.markedDates)
 
-    }
+    }*/
 
     getDifDates(mark, startTime, endTime) {
         while ((endTime.getTime() - startTime.getTime()) >= 0) {
             let year = startTime.getFullYear();
             let month = (startTime.getMonth() < 9 ? "0" + (startTime.getMonth() + 1).toString() : startTime.getMonth() + 1);
             let day = startTime.getDate().toString().length === 1 ? "0" + startTime.getDate() : startTime.getDate();
-            mark[year + "-" + month + "-" + day] = markStyle;
+            // mark[year + "-" + month + "-" + day] = markStyle;
+            mark[year + "-" + month + "-" + day] = {markedStatus:'middle'};
             startTime.setDate(startTime.getDate() + 1);
         }
         return mark;
@@ -95,9 +99,8 @@ export  default  class DatePickerPage extends React.Component {
             <View style={{flex: 1, backgroundColor: 'blue'}}>
                 <CalendarList
                     // Callback which gets executed when visible months change in scroll view. Default = undefined
-                    onVisibleMonthsChange={(months) => {
-                        console.log('now these months are visible', months);
-                    }}
+                    // onVisibleMonthsChange={(months) => {
+                    // }}
                     // Max amount of months allowed to scroll to the past. Default = 50
                     pastScrollRange={50}
                     // Max amount of months allowed to scroll to the future. Default = 50
@@ -106,14 +109,13 @@ export  default  class DatePickerPage extends React.Component {
                     scrollEnabled={true}
                     // Enable or disable vertical scroll indicator. Default = false
                     showScrollIndicator={true}
-                    onDayPress={(day) => {
-                        this._onDayPress(day)
-                    }}
+                    // onDayPress={(day) => {
+                    //     this._onDayPress(day)
+                    // }}
                     dayComponent={(dayDetail) => {
                         return this.getCustomDayComponent(dayDetail);
                     }}
-                    /*markedDates={
-                     this.state.markedDates}*/
+                    markedDates={this.state.markedDates}
                     markingType={'period'}
                     maxDate={new Date().format("yyyy-MM-dd")}
                     theme={{
@@ -162,23 +164,62 @@ export  default  class DatePickerPage extends React.Component {
         this.props.navigation.goBack();
     }
 
+    _onCustomDayPress(date) {
+        let markedDates = this.state.markedDates;
+        if (!markedDates.firstChoiceDay) {
+            let mark = {};
+            mark.firstChoiceDay = date.dateString;
+            mark[date.dateString] = {markedStatus: 'start-end'};
+            this.setState({markedDates: mark, startingDate: date.dateString, endingDate: ''});
+            console.log(mark)
+        }
+        else {
+            let mark = {};
+            let date1 = new Date(markedDates.firstChoiceDay);
+            let date2 = new Date(date.dateString);
+            let startingDate, endingDate;
+            if (date2.getTime() < date1.getTime()) {
+                startingDate = date.dateString;
+                endingDate = markedDates.firstChoiceDay;
+                mark = this.getDifDates(mark, date2, date1);
+                mark[date.dateString] = {markedStatus: 'start'};
+                mark[markedDates.firstChoiceDay] = {markedStatus: 'end'};
+            }
+            else if (date2.getTime() > date1.getTime()) {
+                startingDate = markedDates.firstChoiceDay;
+                endingDate = date.dateString;
+                mark = this.getDifDates(mark, date1, date2);
+                mark[markedDates.firstChoiceDay] = {markedStatus: 'start'};
+                mark[date.dateString] = {markedStatus: 'end'};
+            }
+            this.setState({markedDates: mark, startingDate: startingDate, endingDate: endingDate});
+            console.log(mark)
+        }
+
+
+    }
+
+    getDayExtraInfo() {
+        return '情人节'
+    }
+
     getDayTxtColor(state) {
-        switch(state)
-        {
+        switch (state) {
             case 'disabled':
                 return {
                     color: Theme.fontColorDisable
                 };
             case 'start':
             case 'end':
+            case 'middle':
             case 'start-end':
-                return{
-                    color:'white'
+                return {
+                    color: 'white'
                 };
-            /*case 'today':
-                return{
-                    color:Theme.colorPrimary
-                };*/
+            case 'today':
+             return{
+             color:Theme.colorPrimary
+             };
             default:
                 return {
                     color: Theme.fontColorBlack
@@ -192,68 +233,81 @@ export  default  class DatePickerPage extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={() => {
                 if (!(state === 'disabled')) {
-                    this._onCustomDayPress(date.day)
+                    this._onCustomDayPress(date)
                 }
             }}>
                 {
-                    <View style={styles.dayBlock}><Text style={this.getDayTxtColor(state)}>{date.day}</Text>
-                        <Text
-                            style={[Theme.font10, this.getDayTxtColor(state)]}>{this.getDayExtraInfo(date)}</Text>
-                    </View>
+                    this.getDayView(date, state)
+
                 }
             </TouchableWithoutFeedback>
         );
     }
-    getMarkedStatus(date){
-        let mDates = this.state.markedDates
-        for(let prop in mDates){
-            if(date === prop){
-                return mDates.prop.markedStatus
-            }
-        }
-    }
-    _onCustomDayPress(day) {
 
-        let markedDates = this.state.markedDates;
-        if (!markedDates.firstChoiceDay) {
-            let mark = {};
-            mark.firstChoiceDay = day.dateString;
-            mark[day.dateString] = {markedStatus:'start-end'};
-            this.setState({markedDates: mark, startingDate: day.dateString, endingDate: ''});
-        }
-        else {
-            let mark = {};
-            let date1 = new Date(markedDates.firstChoiceDay);
-            let date2 = new Date(day.dateString);
-            let startingDate, endingDate;
-            if (date2.getTime() < date1.getTime()) {
-                startingDate = day.dateString;
-                endingDate = markedDates.firstChoiceDay;
-                mark = this.getDifDates(mark, date2, date1);
-                mark[day.dateString] = {markedStatus:'start'};
-                mark[markedDates.firstChoiceDay] = {markedStatus:'end'};
+    getMarkedStatus(date) {
+        let mDates = this.state.markedDates;
+        // console.log("mDates",mDates);
+        for (let prop in mDates) {
+            if (date.dateString === prop) {
+                console.log(mDates[prop].markedStatus);
+                return mDates[prop].markedStatus
             }
-            else if (date2.getTime() > date1.getTime()) {
-                startingDate = markedDates.firstChoiceDay;
-                endingDate = day.dateString;
-                mark = this.getDifDates(mark, date1, date2);
-                mark[markedDates.firstChoiceDay] = {markedStatus:'start'};
-                mark[day.dateString] = {markedStatus:'end'};
-            }
-            this.setState({markedDates: mark, startingDate: startingDate, endingDate: endingDate});
         }
-
+        return undefined;
     }
 
-    getDayExtraInfo() {
-        return '情人节'
+    getDayView(date, state) {
+        let newSate = this.getMarkedStatus(date);
+        if(newSate)
+            state =newSate;
+        // state ="start-end";
+        // console.log(date.dateString,state);
+        let markedStyle = {};
+        if (state)
+        {
+            markedStyle ={backgroundColor: Theme.colorPrimary,alignItems: 'center'};
+            switch (state) {
+                case 'start':
+                    markedStyle = {
+                        borderTopLeftRadius: 25,
+                        borderBottomLeftRadius: 25
+                        , ...markedStyle
+                    };
+                    break;
+                case 'middle':
+                    break;
+                case 'end':
+                    markedStyle = {
+                        borderTopRightRadius: 25,
+                        borderBottomRightRadius: 25,
+                        ...markedStyle
+                    };
+                    break;
+                case 'start-end':
+                    markedStyle = {
+                        borderRadius: 25,
+                        ...markedStyle
+                    };
+                    break;
+                default:
+                    markedStyle = {backgroundColor: 'white'};
+                    break
+            }
+        }
+        return (
+            <View style={[styles.dayBlock,markedStyle]}><Text style={this.getDayTxtColor(state)}>{date.day}</Text>
+                <Text
+                    style={[Theme.font10, this.getDayTxtColor(state)]}>{this.getDayExtraInfo(date)}</Text>
+            </View>
+            )
+       // return (<View style={{flex: 1}}><Text style={{textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black'}}>{date.day}</Text></View>)
+
     }
 }
-
 const styles = StyleSheet.create({
     dayBlock: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     pickerBottom: {
         height: 65,
