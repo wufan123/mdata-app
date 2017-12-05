@@ -35,7 +35,6 @@ const CinemaTabNav = TabNavigator({
             justifyContent: 'center',
             // height: 50,
             marginHorizontal: (Dimensions.get('window').width - (3 * 65)) / 2,
-            borderTopWidth: 0,
         },
         labelStyle: {
             fontSize: 16, // 文字大小

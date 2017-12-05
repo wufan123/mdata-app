@@ -363,6 +363,7 @@ export default class RefreshScrollView extends Pullable {
         return (
             <ScrollView ref={(c) => { this.scroll = c; }}
                 onScroll={this.onScroll}
+                onScrollEndDrag={this.props.onScrollEndDrag}
                 onContentSizeChange={this.onContentSizeChange}
                 scrollEnabled={this.state.scrollEnabled}
                 scrollEventThrottle={10}
