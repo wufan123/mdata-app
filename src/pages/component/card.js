@@ -21,12 +21,13 @@ export  default  class Card extends React.Component {
 const styles = StyleSheet.create({
     card: {
         minHeight: 50,
-        margin: 20,
+        marginTop: 15,
+        marginHorizontal:15,
         backgroundColor: '#fff',
         flex: 1,
         borderRadius: 10,
         padding: 5,
-        elevation: 5,
+        elevation: 1,
         shadowOffset: {width: 0, height: 0},
         shadowColor: 'gray'
     }

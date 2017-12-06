@@ -23,12 +23,11 @@ const CinemaTabNav = TabNavigator({
     swipeEnabled: true,
     tabBarOptions: {
         activeTintColor: Theme.colorPrimary,
-        inactiveTintColor: 'gray', // 文字和图片未选中颜色
+        inactiveTintColor: Theme.fontColorBlack, // 文字和图片未选中颜色
         indicatorStyle: {
-            height: 5, // 如TabBar下面显示有一条线，可以设高度为0后隐藏
+            height: 3, // 如TabBar下面显示有一条线，可以设高度为0后隐藏
             backgroundColor: Theme.colorPrimary,
-            width: 20,
-            marginHorizontal: 23
+            width: 65
         },
         style: {
             backgroundColor: 'transparent', // TabBar 背景色
@@ -38,6 +37,7 @@ const CinemaTabNav = TabNavigator({
         },
         labelStyle: {
             fontSize: 16, // 文字大小
+            fontWeight:'bold'
         },
         tabStyle: {
             width: 65
@@ -52,7 +52,8 @@ export  default  class Cinema extends React.Component {
         tabBarIcon: ({tintColor}) => (
             <Image
                 source={require('../../assets/cinema.png')}
-                style={[styles.icon, {tintColor: tintColor}]}
+                style={{tintColor: tintColor}}
+                resizeMode ={'contain'}
             />
         ),
     };

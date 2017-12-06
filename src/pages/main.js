@@ -5,6 +5,7 @@ import Film from './film/filmIndex'
 import Me from './me/meIndex'
 import {Text, View, StyleSheet, Image} from "react-native";
 import SimpleTab from './component/simpleTab'
+import Theme from "../style/index";
 
 
 
@@ -25,19 +26,17 @@ let TabNav = TabNavigator({
     swipeEnabled: false,
     tabBarOptions: {
         activeTintColor: Theme.colorPrimary,
-        inactiveTintColor: 'gray', // 文字和图片未选中颜色
+        inactiveTintColor: Theme.fontColorBlack, // 文字和图片未选中颜色
         showIcon: true,
         style: {
             backgroundColor: '#fff',
         },
         labelStyle: {
-            fontSize: 10, // 文字大小
-            marginBottom: 3
+            fontSize: 12, // 文字大小
+            marginTop:2,
+            marginBottom:5
         },
-        iconStyle: {
-            width: 26,
-            height: 26,
-        },
+        iconStyle: {height:26,width:26},
     },
     backBehavior: 'none',//去除物理返回键事件
 });

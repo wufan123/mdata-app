@@ -12,6 +12,7 @@
     "react-native": "0.50.3",
     "react-native-calendars": "^1.14.2",
     "react-native-haptic": "^1.0.5",
+    "react-native-linear-gradient": "^2.3.0",
     "react-native-swiper": "^1.5.12",
     "react-native-table-component": "git+https://github.com/react-native-common/react-native-table-component.git",
     "react-navigation": "^1.0.0-beta.21"

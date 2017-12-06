@@ -8,7 +8,8 @@ export default class Me extends React.Component {
         tabBarIcon: ({ tintColor }) => (
             <Image
                 source={require('../../assets/me.png')}
-                style={[styles.icon, { tintColor: tintColor }]}
+                style={{ tintColor: tintColor }}
+                resizeMode={'stretch'}
             />
         )
     };
