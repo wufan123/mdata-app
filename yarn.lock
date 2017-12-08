@@ -1329,6 +1329,12 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
+echarts@3.2.3:
+  version "3.2.3"
+  resolved "http://registry.npm.taobao.org/echarts/download/echarts-3.2.3.tgz#4f01e15bfda3352fcd8ef9049f13d8448971a258"
+  dependencies:
+    zrender "^3.1.3"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -2871,6 +2877,12 @@ nan@^2.3.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.8.0.tgz#ed715f3fe9de02b57a5e6252d90a96675e1f085a"
 
+"native-echarts@git+https://github.com/react-native-common/react-native-echarts.git#develop":
+  version "0.3.0"
+  resolved "git+https://github.com/react-native-common/react-native-echarts.git#f978d202636ead81a3192bdb0f1f2a406a5a65a4"
+  dependencies:
+    echarts "3.2.3"
+
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
@@ -3347,6 +3359,12 @@ react-native-drawer-layout@1.3.2:
 react-native-haptic@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-native-haptic/-/react-native-haptic-1.0.5.tgz#91fff9233a0eb0a4e420a00c2bf5cf29610946ed"
+
+react-native-linear-gradient@^2.3.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/react-native-linear-gradient/download/react-native-linear-gradient-2.3.0.tgz#757997197e35edf52e290891a11566e462845da1"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-swiper@^1.5.12:
   version "1.5.13"
@@ -4446,3 +4464,7 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+zrender@^3.1.3:
+  version "3.7.4"
+  resolved "http://registry.npm.taobao.org/zrender/download/zrender-3.7.4.tgz#f847d53948481ef6d42906d1ea9aeec7acbefdf2"
