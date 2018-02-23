@@ -25,7 +25,9 @@ export  default  class NationWide extends React.Component {
             <View style={{flex: 1}}>
                 <RefreshScrollView
                 >
-                    <CinemaCard colors={['#6098ef', '#5876e9']}>
+                    <CinemaCard colors={['#6098ef', '#5876e9']} onPress={()=>{
+                        global.navigation.navigate('NationwideDetail')
+                    }}>
                         {'昨日票房 2017年11月7日'}
                         {'7017.86'}
                         {'每日0点更新票房'}

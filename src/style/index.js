@@ -23,6 +23,7 @@ function fontWithSize(size) {
 export default Theme = {
     backgroundColor: '#FFFFFF',
     colorPrimary: '#4883ff',
+    colorSub:'#ff9600',
     fontColorDisable:'#ccc',
     fontColorBlack: '#3f3f3f',
     fontColorWhite: '#fff',

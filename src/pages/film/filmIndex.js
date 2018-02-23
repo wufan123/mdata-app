@@ -16,12 +16,6 @@ export default class Film extends React.Component {
         ),
     };
 
-    ele(value) {
-        return (
-            <Text style={styles.listText}>hello world</Text>
-        )
-    }
-
     render() {
         let head = 'date'
         let tableTitle = Array(50).fill().map((e, i) => 'date' + i)
